@@ -1,9 +1,11 @@
 <template>
 	<div id="app">
 		<div class="main-navbar">
+            <!-- не локализовано -->
             <h1 class="main-navbar-title">Tasks</h1>
         </div>
         <TaskProgress :progress="progress"/>
+        <!-- можно просто @create-new-task="createNewTask" -->
         <TaskForm @create-new-task="createNewTask($event)"/>
         <TaskGrid
             @task-delete="taskDelete($event)"
@@ -18,19 +20,27 @@ import TaskForm from "@/components/TaskForm.vue"
 import TaskGrid from "@/components/TaskGrid"
 
 export default {
+    // нет имени компонента 
     components: {TaskProgress, TaskForm, TaskGrid},
 
+// created(){ каноничнее
     created: function() {
+        // работа с данными должна быть в сторе, не в представлении
+        // работа с Local-Session Storage следовало вынести в отдельный компонент, где обрабатывались бы ошибки доступа
         const json = localStorage.getItem('tasks');
+        // нет перехвата исключения
         this.tasks = JSON.parse(json) || [];
     },
 
     computed: {
+        // не должно быть возможности устанавливать значение для computed поля
         tasks: {
             get: function() {
+                // прямое обращение к состоянию, вместо вызова метода-геттера
                return this.$store.state.tasks
             },
             set: function(value) {
+                // прямой вызов commit, вместо вызова action
                 this.$store.commit('updateTasks', value)
             }
         },
@@ -44,12 +54,14 @@ export default {
         tasks: {
             deep: true,
             handler() {
+                        // работа с данными должна быть в сторе, не в представлении
                 localStorage.setItem('tasks', JSON.stringify(this.tasks));
             }
         }
     },
 
     methods: {
+        // все эти методы следовало разместить в vuex сторе
         createNewTask(taskTitle) {
             this.tasks.push({
                 title: taskTitle,
@@ -69,6 +81,7 @@ export default {
 </script>
 
 <style>
+/* глобальные стили лучше хранить отдельных стилях */
 * {
     box-sizing: border-box;
     user-select: none;
@@ -89,7 +102,7 @@ body {
     text-align: center;
 }
 
-
+/* хорошая практика вынести шрифты в миксины и добавлять в компоненты, чтобы поддерживать консистетность  */
 .main-navbar-title {
     margin-top: 10px;
     font-weight: 300;

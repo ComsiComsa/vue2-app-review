@@ -5,11 +5,12 @@ import Vuex from 'vuex'
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
-
+// название стора ни о чем не говорит
 const store = new Vuex.Store({
   state: {
     tasks: []
   },
+  // нет публичного api
   mutations: {
     updateTasks (state, tasks) {
       state.tasks = tasks

@@ -12,6 +12,7 @@ export default {
     props: {
         progress: {
             type: Number,
+            // либо default либо required
             default: 0,
             required: true,
         }
