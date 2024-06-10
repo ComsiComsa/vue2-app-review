@@ -1,4 +1,5 @@
 <template>
+<!-- странное равнение аттрибутов -->
     <draggable 
         class="task-grid" id="task-grid"
         v-model="tasks" group="people"
@@ -25,6 +26,8 @@ export default {
         Task, 
     },
     computed: {     
+        // обращение к стору для получения tasks, хотя родительский компонент мог бы прокинуть как опцию
+        // что снизило бы зависимость компонента, появилась вы возможностсь его переиспользования (storybook)
         tasks: {
             get: function() {
                 return this.$store.state.tasks

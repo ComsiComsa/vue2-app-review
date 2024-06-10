@@ -1,4 +1,5 @@
 <template>
+<!-- два пробела, линтер был кстати -->
     <div class="task" :class="taskClass"  @click="$emit('task-toggle', task)">
         <div class="task-header">
             <div class="task-delete-button"
@@ -19,11 +20,13 @@ export default {
         task: {
             type: Object,
             required: true,
+            //  у object опции значение по-умолчанию строка
             default: '',
         }
     },
 
     computed: {
+        // название малоинформативно, taskStatus было бы лучше имхо
         taskClass() {
             return this.task.pending ? 'pending' : 'done';
         },
@@ -81,6 +84,7 @@ export default {
     overflow-wrap: break-word;
 }
 
+/* цвета, отступы, не в константах */
 .task.pending {
     background-color: #d1382e;
     border-left: 12px solid #b8271c;

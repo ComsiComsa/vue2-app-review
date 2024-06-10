@@ -1,7 +1,9 @@
 <template>
     <div class="task-form-container">
         <form class="task-form" @submit="newTask($event)">
+            <!--  placeholder не локализован -->
             <input class="task-form-input" type="text" placeholder="New task?" maxlength="43" v-model="title">
+            <!-- @click.prevent="newTask" -->
             <button class="task-form-button" @click.prevent="newTask($event)">+</button>
         </form>
     </div>
@@ -9,6 +11,7 @@
 
 <script>
 export default {
+    // нет имени компонента
     data() {
         return {
             title: "",
@@ -17,6 +20,7 @@ export default {
 
     methods: {
         newTask (e) {
+            // на обработчике @click уже был добавлен модификатор prevent
             e.preventDefault();
             if ( this.title != ''){
                 this.$emit('create-new-task', this.title);
